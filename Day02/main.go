@@ -53,6 +53,12 @@ func removeInt(slice []int, s int) []int {
 }
 
 func isLevelReallySafe(l []int) bool {
+	copy1 := make([]int, len(l))
+	copy(copy1, l)
+	copy2 := make([]int, len(l))
+	copy(copy2, l)
+	copy3 := make([]int, len(l))
+	copy(copy3, l)
 	// if level is decreasing
 	if l[0] > l[1] {
 		for i := 0; i < len(l)-1; i++ {
@@ -60,8 +66,21 @@ func isLevelReallySafe(l []int) bool {
 			if diff == 1 || diff == 2 || diff == 3 {
 				continue
 			} else {
-				newL := removeInt(l, i)
-				return isLevelSafe(newL)
+				copy1 = removeInt(copy1, i)
+				if i != 0 {
+					copy2 = removeInt(copy2, i-1)
+				}
+				if i < len(l)+1 {
+					copy3 = removeInt(copy3, i+1)
+				}
+
+				try1 := isLevelSafe(copy1)
+				try2 := isLevelSafe(copy2)
+				try3 := isLevelSafe(copy3)
+				if try1 || try2 || try3 {
+					return true
+				}
+				return false
 			}
 		}
 		return true
@@ -73,8 +92,22 @@ func isLevelReallySafe(l []int) bool {
 			if diff == 1 || diff == 2 || diff == 3 {
 				continue
 			} else {
-				newL := removeInt(l, i)
-				return isLevelSafe(newL)
+
+				copy1 = removeInt(copy1, i)
+				if i != 0 {
+					copy2 = removeInt(copy2, i-1)
+				}
+				if i < len(l)+1 {
+					copy3 = removeInt(copy3, i+1)
+				}
+
+				try1 := isLevelSafe(copy1)
+				try2 := isLevelSafe(copy2)
+				try3 := isLevelSafe(copy3)
+				if try1 || try2 || try3 {
+					return true
+				}
+				return false
 			}
 		}
 		return true
